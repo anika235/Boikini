@@ -8,7 +8,7 @@
     {%for cart_item in cart_items%}
     <div class="row book-cart-box">
 
-          <div class="book-img-info col-md-5"> <img class="book-cart-img" align="left" src="{{cart_item.book.image.url}}" style="height: 128px;width: 126px;"/>
+          <div class="book-img-info col-md-5"> <img class="book-cart-img" align="left" src="{{cart_item.book.cover_image_url}}" style="height: 128px;width: 126px;"/>
               <a href="/book/{{cart_item.book.slug}}" class="nostyle">
               <div class="col book-short-detail"><div class="book-title" ><h3>{{cart_item.book.title}}</h3></div></div> </a>
               <div class="col author-name"><p>{{cart_item.book.author}}</p></div></div>
