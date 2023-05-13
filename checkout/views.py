@@ -74,13 +74,13 @@ def checkout_req(request):
             cart = Cart.objects.get(cart_session=session)
             print(cart)
             cart_items_list = CartItems.objects.all().filter(cart=cart)
-            print(cart_items_list)
+            print(type(cart_items_list[0]))
             total = 0
             print(order_save)
 
             for item in cart_items_list:
 
-                order_item= Book.objects.get(title=item.book)
+                order_item= Book.objects.get(title=item.book, id=item.book_id)
                 price = order_item.price
                 quantity = item.quantity
                 total += price*quantity
@@ -169,7 +169,7 @@ def checkout_req(request):
             # removing cart
             cart.delete()
             # decreasing stock
-            stocks_now = Book.objects.get(title=item.book)
+            stocks_now = Book.objects.get(title=item.book, id=item.book_id)
             stocks_now.stocks = stocks_now.stocks-1
             stocks_now.save()
             messages.success(request,"Your order has been successfully received.")

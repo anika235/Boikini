@@ -60,22 +60,22 @@ def register(request):
 
         # Checking for special character
 
-        if special_char_checker(post_first_name):
-            messages.error(request, "Sorry, First Name can't contain a special character.")
-            return redirect("register")
+        # if special_char_checker(post_first_name):
+        #     messages.error(request, "Sorry, First Name can't contain a special character.")
+        #     return redirect("register")
 
 
-        if special_char_checker(post_last_name):
-            messages.error(request,"Sorry, Last Name can't contain a special character.")
-            return redirect("register")
+        # if special_char_checker(post_last_name):
+        #     messages.error(request,"Sorry, Last Name can't contain a special character.")
+        #     return redirect("register")
 
-        if special_char_checker(post_username):
-            messages.error(request, "Sorry, Username can't contain a special character.")
-            return redirect("register")
+        # if special_char_checker(post_username):
+        #     messages.error(request, "Sorry, Username can't contain a special character.")
+        #     return redirect("register")
 
-        if email_special_char_checker(post_email):
-            messages.error(request, "Sorry, Email can't contain a special character.")
-            return redirect("register")
+        # if email_special_char_checker(post_email):
+        #     messages.error(request, "Sorry, Email can't contain a special character.")
+        #     return redirect("register")
 
 
 
