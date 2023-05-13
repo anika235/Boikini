@@ -91,13 +91,7 @@ padding-right: 3rem;
 
 }
 
-.fa-search{
-height: 20px;
-width: 22px;
-border-radius: 0px;
-color: #FFFEFE;
 
-}
 .fa-user{
 height: 19px;
 width: 19px;
@@ -105,17 +99,49 @@ border-radius: 0px;
 
 }
 
-.custom-search-button{
-width: 52px;
-height: 37px;
-background: #4E4C4C;
 
-}
 
-.search-bar{
-position:absolute;
 
-}
+/* Align the search form in the middle of the navbar */
+.navbar-form {
+    display: flex;
+    align-items: center;
+    flex: 1; /* Added */
+    justify-content: flex-end;
+  }
+  
+  /* Style the search input field */
+  .navbar-form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-family: roboto;
+    font-size: 12px;
+    width : 300px;
+    margin-left: 80px;
+    height : 30px;
+  }
+  
+  /* Style the search submit button */
+  .navbar-form button[type="submit"] {
+    padding: 8px 16px;
+    background-color: rgb(10, 132, 10); /* Change button background color to green */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 20px;
+    height :30px;
+
+  }
+  
+  /* Adjust font style for the search form */
+  .navbar-form input[type="text"],
+  .navbar-form button[type="submit"] {
+    font-family: inherit; /* Use the same font as other elements in the navbar */
+  }
+  
 
 .book-price{
 width: 47px;

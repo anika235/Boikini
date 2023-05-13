@@ -88,14 +88,34 @@ def single_book(request, single_book_slug):
 
 def search_result(request):
     if 'query' in request.GET:
-        q = request.GET['query']
-        books = Book.objects.all().filter(title=q)
-        print(q)
-        print(books)
-        context  = {
-            'books':books,
+        query = request.GET['query']
+        url = f"https://www.googleapis.com/books/v1/volumes?q={query}"
+        response = requests.get(url)
+        data = response.json()
+        books = []
+
+        for item in data.get('items', []):
+            volume_info = item.get('volumeInfo', {})
+            price_info = volume_info.get('saleInfo', {}).get('listPrice', {})
+            book = Book(
+            title=volume_info.get('title', ''),
+            author=volume_info.get('authors', [''])[0],
+            description=volume_info.get('description', ''),
+            cover_image_url=volume_info.get('imageLinks', {}).get('thumbnail', ''),
+            price=price_info.get('amount') if price_info else 300,
+           # currency=price_info.get('currencyCode') if price_info else 300,
+            category=Category.objects.get_or_create(volume_info.get('categories', [''])[0])[0],
+            slug=item.get('title', ''),  # Set the slug to the book's ID
+        
+            )
+            books.append(book)
+            book.save()
+
+        context = {
+            'books': books,
         }
         return render(request, 'search_res.html', context)
+
 
 
 @login_required(login_url="/login")
