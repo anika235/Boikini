@@ -12,12 +12,11 @@
 
     {%for book in books%}
 
-
-        <div class="product-box col-md-2 col-sm-6">
-             <a class="text-decoration-none" href="/book/{{book.slug}}">
-           <img class="product-img" src="{{book.image.url}}"/>
+            <div class="product-box col-6 col-md-2 mb-sm-4">
+              <a class="text-decoration-none" href="book/{{book.slug}}">
+            <img class="product-img" src="{{book.cover_image_url}}"/>
             <h3 class="book-title">{{book.title}} </h3>
-            <p class="book-price"><b>৳ {{book.price}}</b></p>
+            <p class="book-price"><b>৳ {{book.price}} </b></p>
             <button class="btn btn-custom"> Buy Now </button>
 
 
@@ -28,43 +27,37 @@
 
 {% endfor %}
 
-        <ul class="pagination">
+<ul class="pagination">
+  {% if books.has_previous %}
     <li class="page-item">
-        {%if books.has_previous %}
-        <li class="page-item"><a href="category?page=1" class="page-link" href="">First</a></li>
-      <a class="page-link" href="category?page={{books.previous_page_number}}" tabindex="-1">{{books.previous_page_number}}</a>
+      <a class="page-link" href="category?page=1">First</a>
     </li>
-
-    {%else%}
-         <li class="page-item disabled">
-             <a class="page-link " href="#">First </a></li>
-
-
-    {%endif%}
-
-         <li class="page-item active">
-      <a class="page-link  text-decoration-none" href="#">{{books.number}} <span class="sr-only">(current)</span></a>
-    </li>
-
-         {%if books.has_next %}
     <li class="page-item">
-      <a class="page-link" href="/category?page={{books.next_page_number}}"> {{books.next_page_number}}</a>
-      <li class="page-item">
-       <a class="page-link" href="/category?page={{books.paginator.num_pages}}">Last </a>
-      </li>
+      <a class="page-link" href="/category/{{ category.slug }}?page={{ books.previous_page_number }}" tabindex="-1">{{ books.previous_page_number }}</a>
+
     </li>
-         {%else%}
-         <li class="page-item disabled">
-             <a class="page-link " href="#">Last </a></li>
-         {%endif%}
-  </ul>
+  {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">First</a>
+    </li>
+  {% endif %}
+  <li class="page-item active">
+    <a class="page-link text-decoration-none" href="#">{{ books.number }} <span class="sr-only">(current)</span></a>
+  </li>
+  {% if books.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="/category?page={{ books.next_page_number }}">{{ books.next_page_number }}</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="/category?page={{ books.paginator.num_pages }}">Last</a>
+    </li>
+  {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#">Last</a>
+    </li>
+  {% endif %}
+</ul>
 
-
-</div>
-
-
-
-</div>
 
 
 
