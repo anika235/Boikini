@@ -42,7 +42,11 @@
            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Category</a></a>
            <ul class="dropdown-menu">
                {%for category in categories%}
-            <li><a class="dropdown-item" href="/category/{{category.slug}}">{{category.category_name}}</a></li>
+               {% if category.slug %}
+               <li><a class="dropdown-item" href="/category/{{ category.slug }}/">{{ category.category_name }}</a></li>
+             {% endif %}
+             
+
              {%endfor%}
 
            </ul>

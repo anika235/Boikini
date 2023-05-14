@@ -13,7 +13,7 @@
     {%for book in books%}
 
             <div class="product-box col-6 col-md-2 mb-sm-4">
-              <a class="text-decoration-none" href="book/{{book.slug}}">
+              <a class="text-decoration-none" href="/book/{{book.slug}}">
             <img class="product-img" src="{{book.cover_image_url}}"/>
             <h3 class="book-title">{{book.title}} </h3>
             <p class="book-price"><b>৳ {{book.price}} </b></p>
@@ -30,10 +30,12 @@
 <ul class="pagination">
   {% if books.has_previous %}
     <li class="page-item">
-      <a class="page-link" href="category?page=1">First</a>
+      <a class="page-link" href="{% url 'category' category.slug %}?page=1">First</a>
+
     </li>
     <li class="page-item">
-      <a class="page-link" href="/category/{{ category.slug }}?page={{ books.previous_page_number }}" tabindex="-1">{{ books.previous_page_number }}</a>
+      <a class="page-link" href="{% url 'category' category.slug %}?page={{ books.previous_page_number }}" tabindex="-1">{{ books.previous_page_number }}</a>
+
 
     </li>
   {% else %}
@@ -46,10 +48,12 @@
   </li>
   {% if books.has_next %}
     <li class="page-item">
-      <a class="page-link" href="/category?page={{ books.next_page_number }}">{{ books.next_page_number }}</a>
+      <a class="page-link" href="{% url 'category' category.slug %}?page={{ books.next_page_number }}">{{ books.next_page_number }}</a>
+
     </li>
     <li class="page-item">
-      <a class="page-link" href="/category?page={{ books.paginator.num_pages }}">Last</a>
+      <a class="page-link" href="{% url 'category' category.slug %}?page={{ books.paginator.num_pages }}">Last</a>
+
     </li>
   {% else %}
     <li class="page-item disabled">
