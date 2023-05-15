@@ -25,4 +25,3 @@ experience to book buyers and sellers.
  python3 manage.py runserver
   ```
   
-<img src= "https://github.com/anika235/Boikini/assets/84635367/87e2ea13-5cda-4013-a879-ed320df5a4b2">
