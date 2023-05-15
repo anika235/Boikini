@@ -11,11 +11,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import  login_required
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 import requests
-from django.db import IntegrityError
-import uuid
-from django.core.exceptions import ObjectDoesNotExist
-
-
 
 categories_list = Category.objects.all()
 
@@ -44,8 +39,6 @@ def home(request):
     for book_data in books_data:
         volume_info = book_data.get('volumeInfo', {})
         price_info = volume_info.get('saleInfo', {}).get('listPrice', {})
-        category_slug = volume_info.get('categories', [''])[0]
-        category, _ = Category.objects.get_or_create(slug=category_slug)
         book = Book(
             title=volume_info.get('title', ''),
             author=volume_info.get('authors', [''])[0],
@@ -53,7 +46,7 @@ def home(request):
             cover_image_url=volume_info.get('imageLinks', {}).get('thumbnail', ''),
             price=price_info.get('amount') if price_info else 300,
            # currency=price_info.get('currencyCode') if price_info else 300,
-            category=category,
+            category=Category.objects.get_or_create(volume_info.get('categories', [''])[0])[0],
             slug=book_data.get('title', ''),  # Set the slug to the book's ID
         
 
@@ -80,8 +73,10 @@ def about(request):
 def single_book(request, single_book_slug):
     if single_book_slug is not None:
         book = get_object_or_404(Book,slug=single_book_slug)
-
         related_books = Book.objects.filter(category=book.category).exclude(slug=single_book_slug)[:5]
+
+
+         
         context = {
 
             'book': book,
@@ -103,24 +98,16 @@ def search_result(request):
         for item in data.get('items', []):
             volume_info = item.get('volumeInfo', {})
             price_info = volume_info.get('saleInfo', {}).get('listPrice', {})
-            categories = volume_info.get('categories', [])
-            category_slug = categories[0] if categories else ''
-            
-            try:
-                category = Category.objects.get(category_name=category_slug)
-            except Category.DoesNotExist:
-                # Generate a unique slug for the category
-                unique_slug = f"{category_slug}-{str(uuid.uuid4())[:8]}"
-                category = Category.objects.create(category_name=category_slug, slug=unique_slug)
-
             book = Book(
-                title=volume_info.get('title', ''),
-                author=volume_info.get('authors', [''])[0],
-                description=volume_info.get('description', ''),
-                cover_image_url=volume_info.get('imageLinks', {}).get('thumbnail', ''),
-                price=price_info.get('amount') if price_info else 300,
-                category=category,
-                slug=item.get('title', ''),  # Set the slug to the book's ID
+            title=volume_info.get('title', ''),
+            author=volume_info.get('authors', [''])[0],
+            description=volume_info.get('description', ''),
+            cover_image_url=volume_info.get('imageLinks', {}).get('thumbnail', ''),
+            price=price_info.get('amount') if price_info else 300,
+           # currency=price_info.get('currencyCode') if price_info else 300,
+            category=Category.objects.get_or_create(volume_info.get('categories', [''])[0])[0],
+            slug=item.get('title', ''),  # Set the slug to the book's ID
+        
             )
             books.append(book)
             book.save()
@@ -129,6 +116,7 @@ def search_result(request):
             'books': books,
         }
         return render(request, 'search_res.html', context)
+
 
 
 @login_required(login_url="/login")

@@ -6,11 +6,6 @@ class Category(models.Model):
     slug = models.SlugField(max_length=20,unique=True)
     category_image = models.ImageField(upload_to="images/cat/", blank=True)
     category_des = models.TextField(max_length=2000,blank=True)
-    
 
     def __str__(self):
         return self.category_name
-
-
-
-

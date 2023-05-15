@@ -110,11 +110,6 @@ def register(request):
             return render(request, 'register.html')
 
 
-
-
-
-
-
 def login(request):
      if request.user.is_authenticated:
          return redirect("dashboard")
